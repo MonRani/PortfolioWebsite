@@ -1,0 +1,97 @@
+.chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2a0845 0%, #1a2980 100%);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    color: white;
+}
+
+.chatbot-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #3d1a61 0%, #26359e 100%);
+}
+
+.chatbot-button:active {
+    transform: scale(0.95);
+}
+
+.chatbot-button.open {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.chatbot-button.open:hover {
+    background: linear-gradient(135deg, #ff6b5a 0%, #d64545 100%);
+}
+
+/* Icon styles */
+.chat-icon,
+.close-icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.chatbot-button:hover .chat-icon,
+.chatbot-button:hover .close-icon {
+    transform: scale(1.1);
+}
+
+/* Animation for icon transitions */
+.chatbot-button {
+    overflow: hidden;
+}
+
+.chat-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.chatbot-button.open .close-icon {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Add a subtle pulse animation when closed */
+.chatbot-button:not(.open) {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(42, 8, 69, 0.5);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .chatbot-button {
+        width: 55px;
+        height: 55px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .chat-icon,
+    .close-icon {
+        width: 22px;
+        height: 22px;
+    }
+}
