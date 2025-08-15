@@ -18,7 +18,9 @@
 
     "react-scripts": "5.0.1",
 
-    "react-tsparticles": "^2.12.2"
+    "react-tsparticles": "^2.12.2",
+
+    "tsparticles": "^2.12.0"
 
   },
 

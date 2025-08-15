@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../../styles/ChatWindow.css';
 
+// Define API base URL using environment variable
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+
 const ChatWindow = ({ isOpen }) => {
     const [messages, setMessages] = useState([
         {
@@ -57,7 +60,8 @@ const ChatWindow = ({ isOpen }) => {
         setInput('');
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/chat', {
+            // Use the API_BASE_URL variable instead of hardcoded URL
+            const response = await fetch(`${API_BASE_URL}/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +81,7 @@ const ChatWindow = ({ isOpen }) => {
         } catch (error) {
             console.error('Error:', error);
             setMessages(prev => [...prev, {
-                text: error.message,
+                text: 'Sorry, I encountered an error. Please try again later.',
                 sender: 'bot'
             }]);
         }

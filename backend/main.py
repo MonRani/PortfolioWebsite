@@ -1,42 +1,3 @@
-# from fastapi import FastAPI, HTTPException
-# from pydantic import BaseModel
-# import google.generativeai as genai
-# from fastapi.middleware.cors import CORSMiddleware
-# import os
-# from dotenv import load_dotenv
-#
-# app = FastAPI()
-#
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://127.0.0.1:3000", "http://localhost:3000"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-#
-# load_dotenv()
-# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-# genai.configure(api_key=GEMINI_API_KEY)
-#
-# # Correct model name
-# model = genai.GenerativeModel('gemini-1.5-flash')
-#
-# class ChatRequest(BaseModel):
-#     message: str
-#
-# @app.post("/chat")
-# async def chat(request: ChatRequest):
-#     try:
-#         response = model.generate_content(request.message)
-#         return {"response": response.text}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-#
-# @app.get("/")
-# async def root():
-#     return {"message": "Chatbot API is running"}
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -46,16 +7,35 @@ from dotenv import load_dotenv
 
 app = FastAPI()
 
+# Load environment variables
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+PORT = int(os.getenv("PORT", 8000))
+
+# Configure CORS based on environment
+if ENVIRONMENT == "production":
+    allowed_origins = [
+        # Replace these with your actual deployed frontend URLs
+        "https://your-actual-frontend.vercel.app",
+        "https://your-custom-domain.com"
+    ]
+else:
+    allowed_origins = [
+        "http://127.0.0.1:3000",
+        "http://localhost:3000",
+        "http://localhost:8080"
+    ]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:3000", "http://localhost:3000", "http://localhost:8080"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 SYSTEM_INSTRUCTION = """You are Monisha Rani Dhana Vijeya's portfolio chatbot. You help visitors learn about Monisha's background, skills, and experience.
@@ -175,4 +155,4 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=PORT)  # Now uses the PORT variable
