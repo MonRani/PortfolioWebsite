@@ -17,9 +17,7 @@ PORT = int(os.getenv("PORT", 8000))
 # Configure CORS based on environment
 if ENVIRONMENT == "production":
     allowed_origins = [
-        # Replace these with your actual deployed frontend URLs
-        "https://your-actual-frontend.vercel.app",
-        "https://your-custom-domain.com"
+        "https://monisharani.vercel.app"
     ]
 else:
     allowed_origins = [
